@@ -15,15 +15,8 @@ class ShiftRegister {
   }
 
   void step() {
-    for (int8_t i = 0; i < 8; i++) {
-      digitalWrite(_serial, (_mask >> i) & 1);
-      delayMicroseconds(1);
-
-      digitalWrite(_clock, HIGH);
-      delayMicroseconds(1);
-      digitalWrite(_clock, LOW);
-      delayMicroseconds(1);
-    }
+    //Serial.println(_mask, BIN);
+    shiftOut(_serial, _clock, LSBFIRST, _mask);
 
     digitalWrite(_rclock, HIGH);
     delayMicroseconds(1);
@@ -50,7 +43,7 @@ class ShiftRegister {
 };
 
 // SER, SRCK, RCK
-class CustomAccelStepper : AccelStepper {
+class CustomAccelStepper : public AccelStepper {
  public:
   CustomAccelStepper(ShiftRegister* shiftRegister, bool useMotor1)
       : AccelStepper(HALF4WIRE, -1, -1, -1, -1) {
@@ -63,6 +56,54 @@ class CustomAccelStepper : AccelStepper {
       _shiftRegister->stepMotor1(mask);
     } else {
       _shiftRegister->stepMotor2(mask);
+    }
+  }
+
+  // blue pink yellow orange -> 
+  void step4(long step) override {
+    switch (step & 0x3) {
+      case 0:  // 1010
+        setOutputPins(0b0110);
+        break;
+      case 1:  // 0110
+        setOutputPins(0b0101);
+        break;
+      case 2:  // 0101
+        setOutputPins(0b1001);
+        break;
+      case 3:  // 1001
+        setOutputPins(0b1010);
+        break;
+    }
+  }
+
+  // blue pink yellow orange -> 
+  void step8(long step) override {
+    switch (step & 0x7) {
+      case 0:  // 1100
+        setOutputPins(0b0011);
+        break;
+      case 1:  // 0100
+        setOutputPins(0b0010);
+        break;
+      case 2:  // 0110
+        setOutputPins(0b0110);
+        break;
+      case 3:  // 0010
+        setOutputPins(0b0100);
+        break;
+      case 4:  // 0011
+        setOutputPins(0b1100);
+        break;
+      case 5:  // 0001
+        setOutputPins(0b1000);
+        break;
+      case 6:  // 1001
+        setOutputPins(0b1001);
+        break;
+      case 7:  // 1000
+        setOutputPins(0b0001);
+        break;
     }
   }
 

@@ -436,12 +436,12 @@
         "line_style": 0,
         "microvia_diameter": 0.3,
         "microvia_drill": 0.1,
-        "name": "3.3V",
+        "name": "12V",
         "pcb_color": "rgba(0, 0, 0, 0.000)",
         "schematic_color": "rgba(0, 0, 0, 0.000)",
-        "track_width": 0.254,
-        "via_diameter": 0.6,
-        "via_drill": 0.3,
+        "track_width": 0.508,
+        "via_diameter": 1.1,
+        "via_drill": 0.7,
         "wire_width": 6
       },
       {
@@ -453,12 +453,12 @@
         "line_style": 0,
         "microvia_diameter": 0.3,
         "microvia_drill": 0.1,
-        "name": "5V",
+        "name": "3.3V",
         "pcb_color": "rgba(0, 0, 0, 0.000)",
         "schematic_color": "rgba(0, 0, 0, 0.000)",
-        "track_width": 0.508,
-        "via_diameter": 1.1,
-        "via_drill": 0.7,
+        "track_width": 0.254,
+        "via_diameter": 0.6,
+        "via_drill": 0.3,
         "wire_width": 6
       },
       {
@@ -486,15 +486,15 @@
     "netclass_assignments": null,
     "netclass_patterns": [
       {
-        "netclass": "5V",
-        "pattern": "+5*"
+        "netclass": "12V",
+        "pattern": "+12*"
       },
       {
         "netclass": "3.3V",
         "pattern": "+3.3V"
       },
       {
-        "netclass": "5V",
+        "netclass": "12V",
         "pattern": "Net-(IC*-DRAIN*"
       },
       {

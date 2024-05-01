@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Time slider</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+  <h1>Time slider</h1>
+  <p>Motor:</p>
+  <input id="motor" type="number" />
+  <p>Amount:</p>
+  <input id="amount" type="number" />
+  <button id="send_motor" onClick="sendMotor()">Send motor</button>
+
+  <p>Pause:</p>
+  <button id="pause" onClick="pauseTime()">Pause time</button>
+
+  <p>Time:</p>
+  <input id="time" type="time" />
+  <button id="send_time" onClick="sendTime()">Send time</button>
+</body>
+<script>
+  function sendMotor() {
+    const motorValue = document.getElementById("motor").value;
+    const amountValue = document.getElementById("amount").value;
+
+    fetch('/move', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ motor: motorValue, amount: amountValue })
+    });
+  }
+
+  function pauseTime() {
+    fetch('/pauseTime', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    });
+  }
+
+  function sendTime() {
+    const timeValue = document.getElementById("time").value;
+    const hour = timeValue.split(":")[0]
+    const minute = timeValue.split(":")[1]
+
+    fetch('/setTime', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ hour, minute })
+    });
+  }
+</script>
+
+</html>
